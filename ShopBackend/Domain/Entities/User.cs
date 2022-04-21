@@ -1,4 +1,4 @@
-﻿namespace ShopBackend.Models
+﻿namespace ShopBackend.Domain.Entities
 {
     public class User
     {
