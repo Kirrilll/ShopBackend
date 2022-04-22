@@ -22,6 +22,18 @@ namespace ShopBackend.Domain
             return item;
         }
 
+        public async Task<ShopItem?> Delete(int id)
+        {
+            var item = await _context.items.FindAsync(id);
+            if(item == null)
+            {
+                return null;
+            }
+            _context.items.Remove(item);
+            await _context.SaveChangesAsync();
+            return item;
+        }
+
         public async Task<IEnumerable<ShopItem>> GetAll()
         {
             return await _context.items.ToListAsync();
@@ -32,9 +44,10 @@ namespace ShopBackend.Domain
             return await _context.items.FindAsync(id);  
         }
 
-        public Task<ShopItem> Update(ShopItem item)
+        public async Task Update(ShopItem item)
         {
-            throw new NotImplementedException();
+           _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

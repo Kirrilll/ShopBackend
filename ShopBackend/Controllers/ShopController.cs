@@ -39,5 +39,36 @@ namespace ShopBackend.Controllers
             var createdItem = await _shopRepository.Create(shopItem)!;
             return CreatedAtAction(nameof(GetById), new {id = createdItem.Id}, createdItem);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] ShopItem shopItem)
+        {
+            if(shopItem == null)
+            {
+                return BadRequest();
+            }
+            await _shopRepository.Update(shopItem);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteById(int id)
+        {
+            var shopItem = await _shopRepository.GetById(id);
+            return shopItem != null ? Ok(shopItem): NotFound();
+        }
+
+        [HttpPatch]
+        public async Task<ActionResult> UpdateCount(int id, int count)
+        {
+            var item = await _shopRepository.GetById(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            item.Count = count;
+            await _shopRepository.Update(item);
+            return Ok(item);
+        }
     }
 }
