@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShopBackend.Domain;
+using ShopBackend.Domain.Repositories;
 using ShopBackend.Domain.Entities;
 
 namespace ShopBackend.Controllers

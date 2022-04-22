@@ -1,6 +1,6 @@
 ﻿using ShopBackend.Domain.Entities;
 
-namespace ShopBackend.Domain
+namespace ShopBackend.Domain.Repositories
 {
     public interface IShopRepository
     {

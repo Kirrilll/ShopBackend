@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopBackend.Domain.Entities;
 
-namespace ShopBackend.Domain
+namespace ShopBackend.Domain.Repositories
 {
     public class ShopRepository: IShopRepository
     {
