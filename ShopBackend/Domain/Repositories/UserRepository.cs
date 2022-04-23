@@ -25,9 +25,9 @@ namespace ShopBackend.Domain.Repositories
             return null;
         }
 
-        public async Task<User?> IsAuth(AuthorizationRequest user)
+        public User? Auth(AuthorizationRequest user)
         {
-            var client = await _context.users.FindAsync(user.Login);
+            var client = _context.users.FirstOrDefault<User>((client) => client.Login.Equals(user.Login));
             if(client == null) return null;
             if (client.Password.Equals(user.Password)) return client;
             return null;
@@ -35,6 +35,8 @@ namespace ShopBackend.Domain.Repositories
 
         public async Task<User?> Registration(User user)
         {
+            var duplicate = _context.users.FirstOrDefault<User>((client) => client.Login.Equals(user.Login));
+            if(duplicate != null) return null;
             _context.users.Add(user);
             await  _context.SaveChangesAsync();
             return user;

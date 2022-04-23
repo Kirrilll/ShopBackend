@@ -2,9 +2,9 @@
 
 namespace ShopBackend.Models
 {
-    public class AuthorizationResponse
+    public class AuthResponse
     {
-        public AuthorizationResponse(bool IsCorrect, User? user)
+        public AuthResponse(bool IsCorrect, User? user)
         {
             this.IsCorrect = IsCorrect;
             this.User = user;

@@ -17,16 +17,18 @@ namespace ShopBackend.Controllers
             _userRepository = userRepository;
         }
 
-        //[HttpPost("authorize")]
-        //public async Task<AuthorizationResponse> Authorization([FromBody] AuthorizationRequest request)
-        //{
-        //    var result = await _userRepository.IsAuth(request);
-        //    if(result == null)
-        //    {
-        //        return new AuthorizationResponse(false, null);
-        //    }
-        //    return new AuthorizationResponse(true, result);
-        //}
+        [HttpPost("authorize")]
+        public ActionResult Authorization([FromBody] AuthorizationRequest request)
+        {
+            var result = _userRepository.Auth(request);
+            if (result == null)
+            {
+                //return new AuthResponse(false, null);
+                return NotFound();
+            }
+            //return new AuthResponse(true, result);
+            return Ok(result);
+        }
 
         [HttpPost("register")] 
         public async Task<ActionResult> Registration([FromBody] AuthorizationRequest request)
