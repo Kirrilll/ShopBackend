@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShopBackend.Domain.Entities;
 using ShopBackend.Domain.Repositories;
 using ShopBackend.Models;
 
@@ -21,33 +22,37 @@ namespace ShopBackend.Controllers
         public ActionResult Authorization([FromBody] AuthorizationRequest request)
         {
             var result = _userRepository.Auth(request);
-            if (result == null)
-            {
-                //return new AuthResponse(false, null);
-                return NotFound();
-            }
-            //return new AuthResponse(true, result);
+            if (result == null) return NotFound();
             return Ok(result);
         }
 
         [HttpPost("register")] 
         public async Task<ActionResult> Registration([FromBody] AuthorizationRequest request)
         {
-            if (request == null)
-            {
-                //return new AuthorizationResponse(false, null);
-                return BadRequest();
-            }
+            if (request == null) return BadRequest();
             var result = await _userRepository.Registration(request.BuildUser());
-            if (result == null)
-            {
-                //return new AuthorizationResponse(false, null);
-                return NotFound();
-            }
-            //return new AuthorizationResponse(true, result);
+            if (result == null)  return NotFound();
             return Ok(result);
            
         }
+
+        [HttpPut("makeAdmin")]
+        public async Task<ActionResult> MakeAdmin(int id)
+        {
+            var user = _userRepository.GetById(id);
+            if (user == null) return NotFound();
+            user.IsAdmin = true;
+            await _userRepository.Update(user);  
+            return Ok(user);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            return await _userRepository.GetAll();
+        }
+
+
 
     }
 }

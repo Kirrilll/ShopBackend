@@ -1,4 +1,5 @@
-﻿using ShopBackend.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ShopBackend.Domain.Entities;
 using ShopBackend.Models;
 
 namespace ShopBackend.Domain.Repositories
@@ -40,6 +41,22 @@ namespace ShopBackend.Domain.Repositories
             _context.users.Add(user);
             await  _context.SaveChangesAsync();
             return user;
+        }
+
+        public User? GetById(int id)
+        {
+             return _context.users.FirstOrDefault<User>(user => user.Id == id);
+        }
+
+        public async Task Update(User user)
+        {
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            return await _context.users.ToListAsync();
         }
     }
 }
