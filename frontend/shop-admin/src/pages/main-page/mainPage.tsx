@@ -1,12 +1,18 @@
 import React from "react";
+import { useState } from "react";
+import ContentConfigurator from "../../components/content-configurator/contentConfigurator";
+import { AdminTabs } from "../../enums/adminTabs";
 
 const MainPage: React.FC = () => {
+
+    const [selectedTab, setSelectedTab] = useState(AdminTabs.SHOP);
+
     return (
         <>
-            <header className='header'></header>
-            <section className = 'content'>
+            <header className='header'>
 
-            </section>
+            </header>
+            <ContentConfigurator selectedTab = {selectedTab}></ContentConfigurator>
         </>
     )
 }
