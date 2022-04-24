@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { IShopItem } from './components/shop-item/shopItem';
+import ShopItemContainer from './components/shop-item-container/shopItemContainer';
+import MainPage from './pages/main-page/mainPage';
 
 function App() {
   return (
-    <div >
-      Hello world
-    </div>
+    <MainPage></MainPage>
   );
 }
 
