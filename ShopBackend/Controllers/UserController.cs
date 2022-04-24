@@ -36,8 +36,8 @@ namespace ShopBackend.Controllers
            
         }
 
-        [HttpPut("makeAdmin")]
-        public async Task<ActionResult> MakeAdmin(int id)
+        [HttpPut("setAdmin")]
+        public async Task<ActionResult> SetAdmin(int id)
         {
             var user = _userRepository.GetById(id);
             if (user == null) return NotFound();
