@@ -13,9 +13,14 @@ namespace ShopBackend.Domain.Repositories
             _context = context;
         }
 
-        public Task<User?> DeleteUser(AuthorizationRequest user)
+        public async Task<User?> DeleteUser(int id)
         {
-          throw new NotImplementedException();
+            var user = await _context.users.FindAsync(id);
+            if (user == null) return null;
+             _context.users.Remove(user);
+            await _context.SaveChangesAsync();
+            return user;
+
         }
 
         public async Task<User?> IsAdmin(AuthorizationRequest user)
