@@ -52,7 +52,7 @@ namespace ShopBackend.Controllers
             return await _userRepository.GetAll();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var user = await _userRepository.DeleteUser(id);
