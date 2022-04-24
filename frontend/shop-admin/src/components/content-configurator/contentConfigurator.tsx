@@ -17,7 +17,7 @@ const ContentConfigurator:React.FC<{selectedTab: AdminTabs}> = (props) => {
             content = <div>Такой страницы не существует</div>
     }
 
-    return (content)
+    return <section className = 'content'>{content}</section>
 }
 
 export default ContentConfigurator

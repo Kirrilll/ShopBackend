@@ -10,8 +10,9 @@ export interface IShopItem{
 
 const ShopItem: React.FC<IShopItem> = (props) => {
     return (
-        <div >
-            item
+        <div className = 'shop-item'>
+            <div className = 'shop-item__title'>{props.name}</div>
+            <div className = 'shop-item__price'>{props.price}</div>
         </div>
     )
 }
