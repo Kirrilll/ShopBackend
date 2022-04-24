@@ -1,4 +1,6 @@
 import React from "react";
+import { useState } from "react";
+import { ShopItemState } from "../../enums/shopItemState";
 import './shopItem.css'
 
 export interface IShopItem{
@@ -9,10 +11,18 @@ export interface IShopItem{
 }
 
 const ShopItem: React.FC<IShopItem> = (props) => {
+
+    const [itemState, setItemState] = useState(ShopItemState.DEFAULT);
+
+    
+
     return (
         <div className = 'shop-item'>
-            <div className = 'shop-item__title'>{props.name}</div>
-            <div className = 'shop-item__price'>{props.price}</div>
+            <div>
+               <div className = 'shop-item__title'>{props.name}</div>
+                <div className = 'shop-item__price'>{`${props.price} руб.`}</div> 
+            </div>
+            <button>Удалить</button>
         </div>
     )
 }
