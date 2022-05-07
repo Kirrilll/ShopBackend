@@ -10,7 +10,7 @@ namespace ShopBackend.Models
         public User BuildUser(bool isAdmin = false)
         {
             var user = new User();
-            user.Id = 0;
+            user.UserId = 0;
             user.Login = Login;
             user.Password = Password;
             user.IsAdmin = isAdmin;

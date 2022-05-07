@@ -37,7 +37,7 @@ namespace ShopBackend.Controllers
                 return BadRequest();
             }
             var createdItem = await _shopRepository.Create(shopItem)!;
-            return CreatedAtAction(nameof(GetById), new {id = createdItem.Id}, createdItem);
+            return CreatedAtAction(nameof(GetById), new {id = createdItem.ShopItemId}, createdItem);
         }
 
         [HttpPut]
@@ -56,19 +56,6 @@ namespace ShopBackend.Controllers
         {
             var shopItem = await _shopRepository.GetById(id);
             return shopItem != null ? Ok(shopItem): NotFound();
-        }
-
-        [HttpPatch]
-        public async Task<ActionResult> UpdateCount(int id, int count)
-        {
-            var item = await _shopRepository.GetById(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            item.Count = count;
-            await _shopRepository.Update(item);
-            return Ok(item);
         }
     }
 }

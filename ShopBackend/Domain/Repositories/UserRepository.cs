@@ -50,7 +50,7 @@ namespace ShopBackend.Domain.Repositories
 
         public User? GetById(int id)
         {
-             return _context.users.FirstOrDefault<User>(user => user.Id == id);
+             return _context.users.FirstOrDefault<User>(user => user.UserId == id);
         }
 
         public async Task Update(User user)
