@@ -8,7 +8,6 @@ namespace ShopBackend.Domain.Entities
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
         public ICollection<Order> Orders { get; set; }
-
         public User()
         {
             this.Orders = new HashSet<Order>();

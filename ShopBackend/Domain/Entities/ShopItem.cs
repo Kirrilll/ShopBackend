@@ -12,5 +12,16 @@
         {
             this.Orders = new HashSet<Order>();
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ShopItem item &&
+                   ShopItemId == item.ShopItemId;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ShopItemId, Name, Price);
+        }
     }
 }

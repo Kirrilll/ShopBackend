@@ -16,5 +16,16 @@ namespace ShopBackend.Models
             this.Count = item.Count;
             this.Id = item.ShopItemId;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ShopItemResponce responce &&
+                   Id == responce.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, Price, Count);
+        }
     }
 }

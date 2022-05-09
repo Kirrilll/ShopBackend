@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ShopBackend.Domain.Repositories;
 using ShopBackend.Domain.Entities;
+using ShopBackend.Models;
 
 namespace ShopBackend.Controllers
 {
@@ -30,13 +31,13 @@ namespace ShopBackend.Controllers
         }
 
         [HttpPost] 
-        public async Task<ActionResult> Create([FromBody] ShopItem shopItem)
+        public async Task<ActionResult> Create([FromBody] ShopItemRequest shopItem)
         {
             if(shopItem == null)
             {
                 return BadRequest();
             }
-            var createdItem = await _shopRepository.Create(shopItem)!;
+            var createdItem = await _shopRepository.Create(shopItem.BuildShopItem())!;
             return CreatedAtAction(nameof(GetById), new {id = createdItem.ShopItemId}, createdItem);
         }
 

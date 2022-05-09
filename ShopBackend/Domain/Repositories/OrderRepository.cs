@@ -13,22 +13,28 @@ namespace ShopBackend.Domain.Repositories
         {
             _context = context;
         }
-        //TODO обрабатывать повторяющиеся элементы
-        //TODO делать здесь update товара (изменять его кол-во)
         public async Task<Order?> Create(OrderRequest orderRequest)
         {
             var user = _context.users.FirstOrDefault<User>(user => user.UserId == orderRequest.UserId);
             if(user == null) return null;
 
-            //var shopItems = _context.items
-            //    .Where(item => orderRequest.shopItemsId
-            //        .Contains(item.ShopItemId))
-            //    .ToList();
-
-            var shopItems = orderRequest.shopItemsId
+            var shopItems = orderRequest.ShopItemsId
                 .Select(itemId => _context.items.Find(itemId)!)
                 .ToList();
-            
+
+            var itemsMap = new Dictionary<ShopItem, int>();
+            foreach (var shopItem in shopItems)
+            {
+                if(itemsMap.ContainsKey(shopItem)) itemsMap[shopItem]++;
+                else itemsMap.Add(shopItem, 1);
+            }
+
+            foreach(var shopItemKey in itemsMap.Keys)
+            {
+                shopItemKey.Count -= itemsMap[shopItemKey];
+                _context.Entry(shopItemKey).State = EntityState.Modified;
+            }
+
             var order = new Order();
             order.Items = shopItems;
             order.User = user;

@@ -5,6 +5,6 @@ namespace ShopBackend.Models
     public class OrderRequest
     {
         public int UserId { get; set; } 
-        public List<int> shopItemsId { get; set; }
+        public List<int> ShopItemsId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ShopBackend.Domain.Entities;
+using ShopBackend.Models.Orders;
 
 namespace ShopBackend.Models
 {
@@ -6,13 +7,23 @@ namespace ShopBackend.Models
     {
         public int UserId { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<ShopItemResponce> Orders { get; set; }
+        public ICollection<OrderContent> OrderContents{ get; set; }
 
         public OrderResponce(Order order)
         {
             UserId = order.UserId;
             CreatedAt = order.CreatedDate;
-            Orders = order.Items.Select(item => new ShopItemResponce(item)).ToList();
+
+            Dictionary<ShopItemInOrder, int> items = new Dictionary<ShopItemInOrder, int>();
+            foreach(var item in order.Items)
+            {
+                var itemInOrder = new ShopItemInOrder(item);
+                if(items.ContainsKey(itemInOrder)) items[itemInOrder]++;
+                else items.Add(itemInOrder, 1);
+            }
+
+            OrderContents = OrderContent.BuildFromDictionary(items);
+            
         }
     }
 }

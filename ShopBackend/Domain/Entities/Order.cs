@@ -11,7 +11,7 @@ namespace ShopBackend.Domain.Entities
         public ICollection<ShopItem> Items { get; set; }
         public Order()
         {
-            this.Items = new HashSet<ShopItem>();
+            this.Items = new List<ShopItem>();
         }
     }
 }
