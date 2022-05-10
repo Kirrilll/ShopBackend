@@ -8,10 +8,10 @@ namespace ShopBackend.Domain.Entities
         public int UserId { get; set; }
         public User User { get; set; }
         public DateTime CreatedDate { get; set; }
-        public ICollection<ShopItem> Items { get; set; }
+        public ICollection<OrderContent> Items { get; set; }
         public Order()
         {
-            this.Items = new List<ShopItem>();
+            this.Items = new List<OrderContent>();
         }
     }
 }

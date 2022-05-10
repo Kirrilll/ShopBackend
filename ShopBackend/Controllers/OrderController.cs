@@ -24,11 +24,11 @@ namespace ShopBackend.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetById(int id)
+        public async Task<ActionResult<OrderResponce>> GetById(int id)
         {
             var order = await _orderRepository.FindById(id);
             if(order == null) return NotFound();
-            return Ok(order);
+            return Ok(new OrderResponce(order));
         }
 
         [HttpPost]
@@ -38,7 +38,6 @@ namespace ShopBackend.Controllers
             var order = await _orderRepository.Create(orderRequest);
             if (order == null) return NotFound();
             return Ok(new OrderResponce(order));
-
         }
     }
 }

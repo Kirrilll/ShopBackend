@@ -13,10 +13,7 @@ namespace ShopBackend.Domain.Repositories
 
         public async Task<ShopItem>? Create(ShopItem item)
         {
-            if(item == null)
-            {
-                return null;
-            }
+            if(item == null) return null;
             _context.items.Add(item);
             await _context.SaveChangesAsync();
             return item;
@@ -25,10 +22,7 @@ namespace ShopBackend.Domain.Repositories
         public async Task<ShopItem?> Delete(int id)
         {
             var item = await _context.items.FindAsync(id);
-            if(item == null)
-            {
-                return null;
-            }
+            if(item == null) return null;
             _context.items.Remove(item);
             await _context.SaveChangesAsync();
             return item;

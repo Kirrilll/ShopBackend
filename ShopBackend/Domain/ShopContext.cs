@@ -19,10 +19,20 @@ namespace ShopBackend.Domain
                 .HasForeignKey(order => order.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<Order>()
-            //    .HasMany<ShopItem>(order => order.Items)
-            //    .WithMany(item => item.Orders)
-            //    .UsingEntity(j => j.ToTable("OrderContent"));
+            modelBuilder.Entity<OrderContent>()
+                .HasKey(oc => oc.Id);
+
+            modelBuilder.Entity<OrderContent>()
+                .HasOne(order => order.Order)
+                .WithMany(o => o.Items)
+                .HasForeignKey(order => order.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<OrderContent>()
+                .HasOne(item => item.ShopItem)
+                .WithMany(i => i.Orders)
+                .HasForeignKey(item => item.ShopItemId)
+                .OnDelete(DeleteBehavior.Cascade);
+                
         }
 
         public ShopContext(DbContextOptions<ShopContext> options) : base(options)

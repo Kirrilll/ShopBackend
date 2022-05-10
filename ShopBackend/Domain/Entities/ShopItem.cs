@@ -6,11 +6,11 @@
         public string Name { get; set; }
         public int Price { get; set; }
         public int Count { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<OrderContent> Orders { get; set; }
 
         public ShopItem()
         {
-            this.Orders = new List<Order>();
+            this.Orders = new List<OrderContent>();
         }
 
         public override bool Equals(object? obj)

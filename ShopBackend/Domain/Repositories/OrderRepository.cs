@@ -35,10 +35,20 @@ namespace ShopBackend.Domain.Repositories
                 _context.Entry(shopItemKey).State = EntityState.Modified;
             }
 
-            var order = new Order();
-            order.Items = shopItems;
-            order.User = user;
-            order.CreatedDate = DateTime.Now;
+            var order = new Order()
+            {
+                CreatedDate = DateTime.Now,
+                User = user,
+                UserId = user.UserId,
+            };
+            order.Items =  shopItems.Select(item => new OrderContent()
+            {
+                Order = order,
+                OrderId = order.OrderId,
+                ShopItem = item,
+                ShopItemId = item.ShopItemId
+            }).ToList();
+
             _context.orders.Add(order);
             await _context.SaveChangesAsync();
             return order;
@@ -56,12 +66,18 @@ namespace ShopBackend.Domain.Repositories
 
         public async Task<IEnumerable<Order>> FindAll()
         {
-            return await _context.orders.Include(order => order.Items).ToListAsync();
+            return await _context.orders
+                .Include(order => order.Items)
+                    .ThenInclude(content => content.ShopItem)
+                .ToListAsync();
         }
 
         public async Task<Order?> FindById(int id)
         {
-            return await _context.orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.OrderId == id);
+            return await _context.orders
+                .Include(o => o.Items)
+                    .ThenInclude(content => content.ShopItem)
+                .FirstOrDefaultAsync(o => o.OrderId == id);
         }
 
         public async Task Update(Order order)

@@ -7,7 +7,7 @@ namespace ShopBackend.Models
     {
         public int UserId { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<OrderContent> OrderContents{ get; set; }
+        public ICollection<OrderContentPart> OrderContents{ get; set; }
 
         public OrderResponce(Order order)
         {
@@ -17,13 +17,12 @@ namespace ShopBackend.Models
             Dictionary<ShopItemInOrder, int> items = new Dictionary<ShopItemInOrder, int>();
             foreach(var item in order.Items)
             {
-                var itemInOrder = new ShopItemInOrder(item);
+                var itemInOrder = new ShopItemInOrder(item.ShopItem);
                 if(items.ContainsKey(itemInOrder)) items[itemInOrder]++;
                 else items.Add(itemInOrder, 1);
             }
 
-            OrderContents = OrderContent.BuildFromDictionary(items);
-            
+            OrderContents = OrderContentPart.BuildFromDictionary(items);
         }
     }
 }
