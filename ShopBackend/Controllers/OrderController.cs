@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShopBackend.Domain.Entities;
 using ShopBackend.Domain.Repositories;
@@ -16,10 +17,10 @@ namespace ShopBackend.Controllers
             _orderRepository = orderRepository;
         }
         [HttpGet]
-        public async Task<IEnumerable<OrderResponce>> GetAll()
+        public async Task<ICollection<OrderResponce>> GetAll()
         {
-            var orders = await _orderRepository.FindAll();
-            return orders.Select(order => new OrderResponce(order));
+            var orders = await  _orderRepository.FindAll();
+            return orders.Select(order => new OrderResponce(order)).ToList();
         }
 
         [HttpGet("{id}")]

@@ -56,12 +56,12 @@ namespace ShopBackend.Domain.Repositories
 
         public async Task<IEnumerable<Order>> FindAll()
         {
-            return await _context.orders.ToListAsync();
+            return await _context.orders.Include(order => order.Items).ToListAsync();
         }
 
         public async Task<Order?> FindById(int id)
         {
-            return await _context.orders.FindAsync(id);
+            return await _context.orders.Include(o => o.Items).FirstOrDefaultAsync(o => o.OrderId == id);
         }
 
         public async Task Update(Order order)

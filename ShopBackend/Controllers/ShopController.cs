@@ -18,16 +18,17 @@ namespace ShopBackend.Controllers
         }
 
         [HttpGet]
-        public Task<IEnumerable<ShopItem>> GetAllItems()
+        public async Task<IEnumerable<ShopItemResponce>> GetAllItems()
         {
-            return _shopRepository.GetAll();
+            var items = await _shopRepository.GetAll();
+            return items.Select(item => new ShopItemResponce(item));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var item =  await _shopRepository.GetById(id);
-            return item == null ? NotFound() : Ok(item);
+            return item == null ? NotFound() : Ok(new ShopItemResponce(item));
         }
 
         [HttpPost] 
@@ -56,7 +57,7 @@ namespace ShopBackend.Controllers
         public async Task<ActionResult> DeleteById(int id)
         {
             var shopItem = await _shopRepository.GetById(id);
-            return shopItem != null ? Ok(shopItem): NotFound();
+            return shopItem != null ? Ok(new ShopItemResponce(shopItem)): NotFound();
         }
     }
 }

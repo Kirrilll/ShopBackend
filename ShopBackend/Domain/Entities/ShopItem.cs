@@ -10,7 +10,7 @@
 
         public ShopItem()
         {
-            this.Orders = new HashSet<Order>();
+            this.Orders = new List<Order>();
         }
 
         public override bool Equals(object? obj)
