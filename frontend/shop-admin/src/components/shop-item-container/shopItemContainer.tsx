@@ -1,13 +1,14 @@
 import React from "react";
+import { Container, Row, Spinner, Col, Card } from "react-bootstrap";
 import { DataState } from "../../enums/dataState";
 import useData from "../../hooks/useData";
 import ShopItem, { IShopItem } from "../shop-item/shopItem";
 import './shoptemContainer.css'
 
 //TODO обрабатывать состояние ERROR
-const ShopItemContainer:React.FC = () => {
+const ShopItemContainer: React.FC = () => {
 
-    const {dataState, data} = useData<IShopItem>(
+    const { dataState, data } = useData<IShopItem>(
         'https://localhost:7176/api/shop',
         [],
         {
@@ -17,11 +18,22 @@ const ShopItemContainer:React.FC = () => {
     );
 
     return (
-        <div className = 'shop-container'>
-            {dataState == DataState.NOT_LOADED
-            ? 'Загружается...' 
-            : data.map(item => <ShopItem key = {item.id} {...item}></ShopItem>)}
-        </div>
+        dataState == DataState.NOT_LOADED
+            ? <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+            : <Container>
+                <Row xs={1} md={4} className="g-4">
+                    {data.map((item) => (
+                        <Col>
+                            <ShopItem key ={item.id} {...item}></ShopItem>
+                        </Col>
+                    ))}
+                </Row>
+            </Container>
+
+
+
     )
 }
 
