@@ -6,6 +6,7 @@
         public string Name { get; set; }
         public int Price { get; set; }
         public int Count { get; set; }
+        public string LogoPath { get; set; }
         public ICollection<OrderContent> Orders { get; set; }
 
         public ShopItem()

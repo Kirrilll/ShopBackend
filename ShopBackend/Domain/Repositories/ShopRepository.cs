@@ -1,22 +1,40 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopBackend.Domain.Entities;
+using ShopBackend.Models;
 
 namespace ShopBackend.Domain.Repositories
 {
     public class ShopRepository: IShopRepository
     {
         private readonly ShopContext _context;
-        public ShopRepository(ShopContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ShopRepository(ShopContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;  
         }
-
-        public async Task<ShopItem>? Create(ShopItem item)
+        public async Task<ShopItem>? Create(ShopItemRequest item)
         {
-            if(item == null) return null;
-            _context.items.Add(item);
+            string directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+            string absoluteFilePath = Path.Combine(directoryPath, item.Image.FileName);
+            string relativeFilePath = "images/" + item.Image.FileName;
+            using(var fileStream = new FileStream(absoluteFilePath, FileMode.Create))
+            {
+                item.Image.CopyTo(fileStream);
+            }
+
+            var shopItem = new ShopItem()
+            {
+                ShopItemId = 0,
+                Name = item.Name,
+                Price = item.Price,
+                Count = item.Count,
+                LogoPath = relativeFilePath
+            };
+     
+            _context.items.Add(shopItem);
             await _context.SaveChangesAsync();
-            return item;
+            return shopItem;
         }
 
         public async Task<ShopItem?> Delete(int id)

@@ -23,6 +23,7 @@ const useData = <Type>(
       method: "GET",
     }).then((res) => {
       if (res.status == 200) {
+        console.log(res.data)
         setData(res.data);
         setDataState(DataState.LOADED);
       } else {

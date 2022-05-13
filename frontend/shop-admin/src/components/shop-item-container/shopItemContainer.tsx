@@ -7,7 +7,6 @@ import './shoptemContainer.css'
 //TODO обрабатывать состояние ERROR
 const ShopItemContainer:React.FC = () => {
 
-
     const {dataState, data} = useData<IShopItem>(
         'https://localhost:7176/api/shop',
         [],
@@ -16,8 +15,6 @@ const ShopItemContainer:React.FC = () => {
             body: null
         }
     );
-
-
 
     return (
         <div className = 'shop-container'>

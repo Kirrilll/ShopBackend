@@ -32,13 +32,14 @@ namespace ShopBackend.Controllers
         }
 
         [HttpPost] 
-        public async Task<ActionResult> Create([FromBody] ShopItemRequest shopItem)
+        
+        public async Task<ActionResult> Create([FromForm] ShopItemRequest shopItem)
         {
             if(shopItem == null)
             {
                 return BadRequest();
             }
-            var createdItem = await _shopRepository.Create(shopItem.BuildShopItem())!;
+            var createdItem = await _shopRepository.Create(shopItem)!;
             return CreatedAtAction(nameof(GetById), new {id = createdItem.ShopItemId}, createdItem);
         }
 

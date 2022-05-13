@@ -8,6 +8,7 @@ namespace ShopBackend.Models
         public string Name { get; set; }
         public int Price { get; set; }
         public int Count { get; set; }
+        public string ImagePath { get; set; }
 
         public ShopItemResponce(ShopItem item)
         {
@@ -15,6 +16,7 @@ namespace ShopBackend.Models
             this.Name = item.Name;
             this.Count = item.Count;
             this.Id = item.ShopItemId;
+            this.ImagePath = item.LogoPath;
         }
 
         public override bool Equals(object? obj)
