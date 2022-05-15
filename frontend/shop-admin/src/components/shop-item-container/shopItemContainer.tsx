@@ -17,6 +17,8 @@ const ShopItemContainer: React.FC = () => {
         }
     );
 
+    
+
     return (
         dataState == DataState.NOT_LOADED
             ? <Spinner animation="border" role="status">
@@ -31,9 +33,6 @@ const ShopItemContainer: React.FC = () => {
                     ))}
                 </Row>
             </Container>
-
-
-
     )
 }
 
