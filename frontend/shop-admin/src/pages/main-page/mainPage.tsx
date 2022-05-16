@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Container, Navbar, Tab, Tabs } from "react-bootstrap";
 import ShopItemContainer from "../../components/shop-item-container/shopItemContainer";
+import UsersContainer from "../../components/users-container/usersContainer";
 import './mainPage.css'
 
 const MainPage: React.FC = () => {
@@ -24,7 +25,7 @@ const MainPage: React.FC = () => {
                     <ShopItemContainer></ShopItemContainer>
                 </Tab>
                 <Tab eventKey="Users" title="Пользователи">
-                    <div> Страница пользователей в разработке</div>
+                    <UsersContainer></UsersContainer>
                 </Tab>
                 <Tab eventKey="Orders" title="Заказы">
                     <div>Страница заказов в разработке</div>

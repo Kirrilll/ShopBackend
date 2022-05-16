@@ -36,20 +36,21 @@ namespace ShopBackend.Controllers
            
         }
 
-        [HttpPut("setAdmin")]
-        public async Task<ActionResult> SetAdmin(int id)
+        [HttpPut("{id}/{isAdmin}")]
+        public async Task<ActionResult> SetAdmin(int id, bool isAdmin)
         {
             var user = _userRepository.GetById(id);
             if (user == null) return NotFound();
-            user.IsAdmin = true;
+            user.IsAdmin = isAdmin;
             await _userRepository.Update(user);  
             return Ok(user);
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<UserResponse>> GetAll()
         {
-            return await _userRepository.GetAll();
+            var users = await _userRepository.GetAll();
+            return users.Select(user => new UserResponse(user)).ToList();
         }
 
         [HttpDelete("{id}")]
