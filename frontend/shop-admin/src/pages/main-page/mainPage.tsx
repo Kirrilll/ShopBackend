@@ -1,19 +1,39 @@
 import React from "react";
 import { useState } from "react";
-import ContentConfigurator from "../../components/content-configurator/contentConfigurator";
-import { AdminTabs } from "../../enums/adminTabs";
+import { Container, Navbar, Tab, Tabs } from "react-bootstrap";
+import ShopItemContainer from "../../components/shop-item-container/shopItemContainer";
 import './mainPage.css'
 
 const MainPage: React.FC = () => {
 
-    const [selectedTab, setSelectedTab] = useState(AdminTabs.SHOP);
+    const [selectedTab, setSelectedTab] = useState('Items');
 
     return (
         <>
-            <header className='header'></header>
-            <ContentConfigurator selectedTab = {selectedTab}></ContentConfigurator>
+            <Navbar bg = 'dark' variant = 'dark' >
+                <Container>
+                    <Navbar.Brand>Магазин</Navbar.Brand>
+                </Container>
+            </Navbar>
+            <Tabs
+                activeKey={selectedTab}
+                id="controlled-tab-example"
+                onSelect={(key) => setSelectedTab(key!)}
+                className="mb-3 ">
+                <Tab eventKey="Items" title="Товары">
+                    <ShopItemContainer></ShopItemContainer>
+                </Tab>
+                <Tab eventKey="Users" title="Пользователи">
+                    <div> Страница пользователей в разработке</div>
+                </Tab>
+                <Tab eventKey="Orders" title="Заказы">
+                    <div>Страница заказов в разработке</div>
+                </Tab>
+            </Tabs>
         </>
     )
 }
+
+
 
 export default MainPage;

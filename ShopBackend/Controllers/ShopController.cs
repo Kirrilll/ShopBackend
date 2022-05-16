@@ -27,37 +27,37 @@ namespace ShopBackend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var item =  await _shopRepository.GetById(id);
+            var item = await _shopRepository.GetById(id);
             return item == null ? NotFound() : Ok(new ShopItemResponce(item));
         }
 
-        [HttpPost] 
-        
+        [HttpPost]
+
         public async Task<ActionResult> Create([FromForm] ShopItemRequest shopItem)
         {
-            if(shopItem == null)
+            if (shopItem == null)
             {
                 return BadRequest();
             }
             var createdItem = await _shopRepository.Create(shopItem)!;
-            return CreatedAtAction(nameof(GetById), new {id = createdItem.ShopItemId}, createdItem);
+            return CreatedAtAction(nameof(GetById), new { id = createdItem.ShopItemId }, createdItem);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update([FromBody] ShopItem shopItem)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update([FromForm] ShopItemRequest shopItem, int id)
         {
             if(shopItem == null)
             {
                 return BadRequest();
             }
-            await _shopRepository.Update(shopItem);
+            await _shopRepository.Update(shopItem, id);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteById(int id)
         {
-            var shopItem = await _shopRepository.GetById(id);
+            var shopItem = await _shopRepository.Delete(id);
             return shopItem != null ? Ok(new ShopItemResponce(shopItem)): NotFound();
         }
     }

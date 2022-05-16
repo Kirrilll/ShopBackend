@@ -7,7 +7,7 @@ namespace ShopBackend.Domain.Repositories
     {
         Task<IEnumerable<ShopItem>> GetAll();
         Task<ShopItem>? Create(ShopItemRequest item); 
-        Task Update(ShopItem item);
+        Task Update(ShopItemRequest item, int id);
         Task<ShopItem?> GetById(int id);
         Task<ShopItem?> Delete(int id);
 
