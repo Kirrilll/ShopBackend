@@ -27,22 +27,26 @@ const ShopItemContainer: React.FC = () => {
 
     return (
         <>
-        <ShopItemAddModal isShown = {isShown} handleHide = {() => setIsShown(false)}/>
-       { dataState == DataState.NOT_LOADED
-            ? <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-            : <Container>
-                <Button variant="primary" size="lg" onClick = {() => setIsShown(true)}> 
-                    Добавить
-                </Button>
-                <Row xs={1} md={4} className="g-4">
-                    {data.map((item) => (
-                        <ShopItem key={item.id} {...item}></ShopItem>
-                    ))}
-                </Row>
-            </Container>}
-            </>
+            <ShopItemAddModal isShown={isShown} handleHide={() => setIsShown(false)} />
+            {dataState == DataState.NOT_LOADED
+                ? <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+                : <Container>
+
+                    <Row xs={1} md={4} className="g-4">
+                        <Col>
+                            <Button variant="primary" size="lg" onClick={() => setIsShown(true)}> Добавить </Button>
+                        </Col>
+
+                        {data.map((item) => (
+                            <Col>
+                                <ShopItem key={item.id} {...item}></ShopItem>
+                            </Col>
+                        ))}
+                    </Row>
+                </Container>}
+        </>
     )
 }
 

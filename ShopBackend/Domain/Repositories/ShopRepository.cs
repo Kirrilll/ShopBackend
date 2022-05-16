@@ -65,18 +65,22 @@ namespace ShopBackend.Domain.Repositories
             updatedItem.Count = item.Count;
             updatedItem.Name = item.Name;
 
-            string directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-            string absoluteFilePath = Path.Combine(directoryPath, item.Image.FileName);
-            string relativeFilePath = "images/" + item.Image.FileName;
 
-            if (!updatedItem.LogoPath.Equals(relativeFilePath))
+            if(item.Image != null)
             {
-                using (var fileStream = new FileStream(absoluteFilePath, FileMode.Create))
+                string directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                string absoluteFilePath = Path.Combine(directoryPath, item.Image.FileName);
+                string relativeFilePath = "images/" + item.Image.FileName;
+
+                if (!updatedItem.LogoPath.Equals(relativeFilePath))
                 {
-                    item.Image.CopyTo(fileStream);
+                    using (var fileStream = new FileStream(absoluteFilePath, FileMode.Create))
+                        {
+                            item.Image.CopyTo(fileStream);
+                        }
+                    File.Delete(Path.Combine(_webHostEnvironment.WebRootPath, updatedItem.LogoPath));
+                    updatedItem.LogoPath = relativeFilePath;
                 }
-                File.Delete(Path.Combine(_webHostEnvironment.WebRootPath, updatedItem.LogoPath));
-                updatedItem.LogoPath = relativeFilePath;
             }
             _context.Entry(updatedItem).State = EntityState.Modified;
             await _context.SaveChangesAsync();
