@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Container, Navbar, Tab, Tabs } from "react-bootstrap";
+import OrdersContainer from "../../components/orders-container/ordersContainer";
 import ShopItemContainer from "../../components/shop-item-container/shopItemContainer";
 import UsersContainer from "../../components/users-container/usersContainer";
 import './mainPage.css'
@@ -28,7 +29,7 @@ const MainPage: React.FC = () => {
                     <UsersContainer></UsersContainer>
                 </Tab>
                 <Tab eventKey="Orders" title="Заказы">
-                    <div>Страница заказов в разработке</div>
+                    <OrdersContainer></OrdersContainer>
                 </Tab>
             </Tabs>
         </>

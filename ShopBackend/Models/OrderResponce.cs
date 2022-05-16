@@ -5,12 +5,14 @@ namespace ShopBackend.Models
 {
     public class OrderResponce
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public DateTime CreatedAt { get; set; }
         public ICollection<OrderContentPart> OrderContents{ get; set; }
 
         public OrderResponce(Order order)
         {
+            Id = order.OrderId;
             UserId = order.UserId;
             CreatedAt = order.CreatedDate;
 
