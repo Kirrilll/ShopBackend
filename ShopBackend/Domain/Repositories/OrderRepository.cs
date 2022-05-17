@@ -67,6 +67,7 @@ namespace ShopBackend.Domain.Repositories
         public async Task<IEnumerable<Order>> FindAll()
         {
             return await _context.orders
+                .Include(order => order.User)
                 .Include(order => order.Items)
                     .ThenInclude(content => content.ShopItem)
                 .ToListAsync();
@@ -75,6 +76,7 @@ namespace ShopBackend.Domain.Repositories
         public async Task<Order?> FindById(int id)
         {
             return await _context.orders
+                .Include(u => u.User)
                 .Include(o => o.Items)
                     .ThenInclude(content => content.ShopItem)
                 .FirstOrDefaultAsync(o => o.OrderId == id);

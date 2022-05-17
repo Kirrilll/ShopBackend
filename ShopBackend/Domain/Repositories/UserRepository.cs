@@ -23,9 +23,9 @@ namespace ShopBackend.Domain.Repositories
 
         }
 
-        public async Task<User?> IsAdmin(AuthorizationRequest user)
+        public async Task<User?> IsAdmin(int id)
         {
-            var client = await _context.users.FindAsync(user.Login.ToLower());
+            var client = await _context.users.FindAsync(id);
             if (client == null) return null;
             if (client.IsAdmin) return client;
             return null;
@@ -33,7 +33,7 @@ namespace ShopBackend.Domain.Repositories
 
         public User? Auth(AuthorizationRequest user)
         {
-            var client = _context.users.FirstOrDefault<User>((client) => client.Login.Equals(user.Login));
+            var client = _context.users.FirstOrDefault<User>((client) => client.Phone.Equals(user.Phone));
             if(client == null) return null;
             if (client.Password.Equals(user.Password)) return client;
             return null;
@@ -41,7 +41,7 @@ namespace ShopBackend.Domain.Repositories
 
         public async Task<User?> Registration(User user)
         {
-            var duplicate = _context.users.FirstOrDefault<User>((client) => client.Login.Equals(user.Login));
+            var duplicate = _context.users.FirstOrDefault<User>((client) => client.Phone.Equals(user.Phone));
             if(duplicate != null) return null;
             _context.users.Add(user);
             await  _context.SaveChangesAsync();

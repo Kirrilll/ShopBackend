@@ -4,7 +4,11 @@ import styled, { StyledFunction } from "styled-components";
 
 export interface User {
     id: number,
-    userName: string,
+    name: string,
+    surname: string,
+    patronymic: string,
+    phone: string,
+    email: string,
     isAdmin: boolean
 }
 
@@ -18,11 +22,13 @@ const UserCard: React.FC<IUserCardProp> = (props) => {
 
     const {user, setRole} = props;
 
+    const fullName = `${user.surname} ${user.name} ${user.patronymic}`;
+
     return (
         <UserCardWrapper>
-            <Row>
+            <Row className = 'align-items-center'>
                 <Col sm = {8}>
-                    <div>{user.userName}</div>
+                    <div>{fullName}</div>
                 </Col>
                 <Col sm ={4} className='text-end p-2'>
                     <Row>

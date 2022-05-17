@@ -1,7 +1,7 @@
 export interface ShopItemOrder{
     id: number,
     price: number,
-    count: number
+    name: string
 }
 
 
@@ -14,5 +14,6 @@ export interface Order{
     id: number,
     userId: number,
     orderContents: Array<OrderContent>,
-    createdAt: Date
+    createdAt: Date,
+    userName: string
 }

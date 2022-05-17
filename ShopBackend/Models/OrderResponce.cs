@@ -7,6 +7,7 @@ namespace ShopBackend.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public string UserName { get; set; }
         public DateTime CreatedAt { get; set; }
         public ICollection<OrderContentPart> OrderContents{ get; set; }
 
@@ -15,6 +16,7 @@ namespace ShopBackend.Models
             Id = order.OrderId;
             UserId = order.UserId;
             CreatedAt = order.CreatedDate;
+            UserName = order.User.Surname + " " + order.User.Name + " " + order.User.Patronymic;
 
             Dictionary<ShopItemInOrder, int> items = new Dictionary<ShopItemInOrder, int>();
             foreach(var item in order.Items)

@@ -27,7 +27,7 @@ namespace ShopBackend.Controllers
         }
 
         [HttpPost("register")] 
-        public async Task<ActionResult> Registration([FromBody] AuthorizationRequest request)
+        public async Task<ActionResult> Registration([FromBody] RegistrationRequest request)
         {
             if (request == null) return BadRequest();
             var result = await _userRepository.Registration(request.BuildUser());

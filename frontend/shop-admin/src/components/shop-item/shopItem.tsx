@@ -61,13 +61,13 @@ const ShopItem: React.FC<IShopItem> = (props) => {
         formData.append('Price', postData.price.toString());
         formData.append('Count', postData.count.toString());
         formData.append('Image', postData.image!);
-        
+
         axios({
             method: 'PUT',
             url: `https://localhost:7176/api/Shop/${props.id}`,
             data: formData,
             headers: {
-               'Content-Type':'multipart/form-data'
+                'Content-Type': 'multipart/form-data'
             }
         })
     }
@@ -86,20 +86,25 @@ const ShopItem: React.FC<IShopItem> = (props) => {
             <Card.Header className='d-flex justify-content-between'>
                 {
                     isEdit
-                        ? <FormControl name = 'name' type='text' value={postData.name} onChange={handleInputField} />
+                        ? <FormControl name='name' type='text' value={postData.name} onChange={handleInputField} />
                         : <Card.Title>{props.name}</Card.Title>
                 }
 
                 <Row className='d-flex align-items-center justify-content-between flex-nowrap'>
                     {
                         isEdit
-                            ? < Row className='d-flex justify-content-around align-items-center'>
-                                <IconButton onClick={handleSave}>
-                                    <Image width='100%' src={DONE_ICON}></Image>
-                                </IconButton>
-                                <IconButton onClick={handleClose}>
-                                    <Image width='100%' src={CLOSE_ICON}></Image>
-                                </IconButton>
+                            ? < Row className='align-items-center'>
+                                <Col>
+                                    <IconButton onClick={handleSave}>
+                                        <Image width='100%' src={DONE_ICON}></Image>
+                                    </IconButton>
+                                </Col>
+                                <Col>
+                                    <IconButton onClick={handleClose}>
+                                        <Image width='100%' src={CLOSE_ICON}></Image>
+                                    </IconButton>
+                                </Col>
+
                             </Row>
                             : <IconButton onClick={() => setIsEdit(true)}>
                                 <Image width='100%' src={EDIT_ICON}></Image>
@@ -125,8 +130,8 @@ const ShopItem: React.FC<IShopItem> = (props) => {
                                 accept={'image/png, image/webp'}
                                 onChange={handleImageChange}
                             />
-                            <FormControl name = 'price' type='number' value={postData.price} onChange={handleInputField} />
-                            <FormControl name = 'count' type='number' value={postData.count} onChange={handleInputField} />
+                            <FormControl name='price' type='number' value={postData.price} onChange={handleInputField} />
+                            <FormControl name='count' type='number' value={postData.count} onChange={handleInputField} />
                         </>
                         : <>
                             <Card.Text>{`${props.price} руб.`}</Card.Text>
@@ -147,8 +152,8 @@ const CustomCard = styled(Card)`
 
 const IconButton = styled(Button)`
     &&{
-        width: 40px;
-        height: 40px;
+        width: 20px;
+        height: 20px;
         border-radius: 100%;
         padding: 0;
         background-color: transparent;
