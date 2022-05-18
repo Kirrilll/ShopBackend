@@ -4,6 +4,7 @@ import { Button, Col, FloatingLabel, Form, Row, Spinner } from "react-bootstrap"
 import { useNavigate } from "react-router-dom";
 import { RequestState } from "../../enums/requestState";
 import { IFormProp } from "../../pages/login-page/loginPage";
+import { User } from "../user-card/userCard";
 
 
 interface ILoginForm {
@@ -48,8 +49,9 @@ const LoginForm: React.FC<IFormProp> = (props) => {
                     if (res.status == 200) {
                         setRequestState(RequestState.SUCCESSFULL);
                         //Записываю user в глобальные данные
-                        navigate('/admin');
                         const user = res.data;
+                        navigate(`/shop/${user.userId}/${user.isAdmin}`);
+                        
                         console.log(user);
                     }
                     else {

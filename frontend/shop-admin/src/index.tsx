@@ -14,9 +14,8 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element = {<LoginPage/>}> </Route>
-      <Route path = '/shop' element = {<ShopPage/>}></Route>
-      <Route path='/admin' element = {<AdminPage/>}></Route>
-
+      <Route path = '/shop/:id/:isAdmin' element = {<ShopPage/>}></Route>
+      <Route path='/admin/:id' element = {<AdminPage/>}></Route>
     </Routes>
   </BrowserRouter>
 );

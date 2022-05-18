@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Col, Container, Navbar, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { BsFillCartFill } from 'react-icons/bs'
 import { useState } from "react";
@@ -24,7 +24,10 @@ interface ICart {
 
 const ShopPage: React.FC = () => {
 
-    const initialCart: ICart = {items: []};
+    const { id, isAdmin } = useParams();
+
+    const navigate = useNavigate();
+    const initialCart: ICart = { items: [] };
 
     const [cart, setCart] = useState<ICart>(initialCart);
     const [isShown, setIsShown] = useState<boolean>(false);
@@ -62,27 +65,27 @@ const ShopPage: React.FC = () => {
         setItems([...dataDuplicate]);
     }, [cart])
 
-    const buy = async ( reqestHandler:(requestState: RequestState) => void) => {
+    const buy = async (reqestHandler: (requestState: RequestState) => void) => {
         let ids = cart.items
             .map((cartItem) => Array.from({ length: cartItem.count })
                 .fill(cartItem.item.id))
             .flat();
-            reqestHandler(RequestState.LOADING);
-            let responce = await axios.post(
-                'https://localhost:7176/api/Order',
-                {
-                    userId: 1,
-                    shopItemsId: ids
-                }
-            );
-            if(responce.status == 200){
-                updateData();
-                setCart(initialCart);
-                reqestHandler(RequestState.SUCCESSFULL);
+        reqestHandler(RequestState.LOADING);
+        let responce = await axios.post(
+            'https://localhost:7176/api/Order',
+            {
+                userId: 1,
+                shopItemsId: ids
             }
-            else{
-                reqestHandler(RequestState.ERROR);
-            }
+        );
+        if (responce.status == 200) {
+            updateData();
+            setCart(initialCart);
+            reqestHandler(RequestState.SUCCESSFULL);
+        }
+        else {
+            reqestHandler(RequestState.ERROR);
+        }
     }
 
     const changeItemCount = (item: CartItem, newValue: number) => {
@@ -154,7 +157,19 @@ const ShopPage: React.FC = () => {
                             </Col>
                         </Row>
                         <Navbar.Text>
-                            <Link to="/">Выйти</Link>
+                            <Row className='gap-1'>
+                                <Col sm = {2}>
+                                    <Link to="/">Выйти</Link>
+                                </Col>
+                                {isAdmin === 'true'
+                                    ? <Col>
+                                        <Button size="sm" onClick={() => navigate(`/admin/${id}`)}>Перейти на админскую панель</Button>
+                                    </Col>
+                                    : null
+                                }
+
+                            </Row>
+
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Container>

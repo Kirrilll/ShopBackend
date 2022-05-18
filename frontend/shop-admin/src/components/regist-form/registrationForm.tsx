@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { FormEvent, useState } from 'react'
 import { useEffect } from 'react';
 import { Button, Col, FloatingLabel, Form, Row, Spinner } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 import { DataState } from '../../enums/dataState';
 import { RequestState } from '../../enums/requestState';
 import { RegistrationValidator } from '../../helpers/registrationValidator';
@@ -29,8 +30,8 @@ const RegistrationForm: React.FC<IFormProp> = (props) => {
         confimPassword: ''
     }
 
+    const navigate = useNavigate();
     const [requestState, setRequestState] = useState<RequestState>(RequestState.IDLE)
-
     const [regFormData, setRegFormData] = useState<IRegistrationForm>(initialValue);
 
     const submit = (e: FormEvent<HTMLFormElement>) => {
@@ -51,8 +52,8 @@ const RegistrationForm: React.FC<IFormProp> = (props) => {
                 //Перенаправить на страницу магазина
                 if (res.status == 200) {
                     let user = res.data;
-                    console.log(user)
                     setRequestState(RequestState.SUCCESSFULL);
+                    navigate(`/shop/${user.userId}/${user.isAdmin}`);
                 }
                 else {
                     setRequestState(RequestState.ERROR)
