@@ -1,4 +1,4 @@
-import { IShopItem } from "../components/shop-item/shopItem";
+import { IShopItem } from "../components/admin-shop-item/adminShopItem";
 
 export default class ShopItemComparer {
     static equalsItem(item1: IShopItem, item2: IShopItem): boolean {

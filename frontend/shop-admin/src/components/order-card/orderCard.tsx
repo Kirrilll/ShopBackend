@@ -9,7 +9,7 @@ const OrderCard: React.FC<Order> = (order) => {
 
     return (
         <Accordion.Item eventKey={order.id.toString()}>
-            <Accordion.Header className='align-items-center p-4'>
+            <Accordion.Header className='align-items-center'>
                 <Col>
                     <div className='mb-4 font-weight-bold text-lg-left'> {`Заказ # ${order.id}`}</div>
                     <div className='mb-4 font-weight-bold text-lg-left'>  {`Дата заказа: ${date.toLocaleString()}`} </div>

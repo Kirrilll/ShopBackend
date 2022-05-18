@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Container, Navbar, Tab, Tabs } from "react-bootstrap";
 import OrdersContainer from "../../components/orders-container/ordersContainer";
-import ShopItemContainer from "../../components/shop-item-container/shopItemContainer";
+import AdminShopItemContainer from "../../components/admin-shop-item-container/adminShopItemContainer";
 import UsersContainer from "../../components/users-container/usersContainer";
 
 const AdminPage: React.FC = () => {
@@ -22,7 +22,7 @@ const AdminPage: React.FC = () => {
                 onSelect={(key) => setSelectedTab(key!)}
                 className="mb-3 ">
                 <Tab eventKey="Items" title="Товары">
-                    <ShopItemContainer></ShopItemContainer>
+                    <AdminShopItemContainer></AdminShopItemContainer>
                 </Tab>
                 <Tab eventKey="Users" title="Пользователи">
                     <UsersContainer></UsersContainer>

@@ -1,10 +1,10 @@
 import React, { DependencyList, useEffect, useRef, useState } from "react";
-import { IShopItem } from "../components/shop-item/shopItem";
+import { IShopItem } from "../components/admin-shop-item/adminShopItem";
 import { DataState } from "../enums/dataState";
 import axios, { AxiosPromise } from "axios";
 
 
-const useData = <Type>(request: () => AxiosPromise) => {
+const useData = <Type>(request: () => AxiosPromise, dependencies: DependencyList = []) => {
   const [dataState, setDataState] = useState<DataState>(DataState.NOT_LOADED);
   const [data, setData] = useState<Array<Type>>([]);
 
@@ -16,7 +16,7 @@ const useData = <Type>(request: () => AxiosPromise) => {
       }
       else setDataState(DataState.ERROR)
     }).catch((e) => setDataState(DataState.ERROR));
-  }, [])
+  }, dependencies)
 
   return { dataState, data, dataHandler: ((value: React.SetStateAction<Type[]>) => setData(value)) };
 };

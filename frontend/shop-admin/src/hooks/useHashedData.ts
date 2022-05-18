@@ -1,6 +1,6 @@
 import { AxiosPromise } from "axios";
 import { useEffect, useRef } from "react";
-import { IShopItem } from "../components/shop-item/shopItem";
+import { IShopItem } from "../components/admin-shop-item/adminShopItem";
 import ShopItemComparer from "../helpers/shopItemComparer";
 
 

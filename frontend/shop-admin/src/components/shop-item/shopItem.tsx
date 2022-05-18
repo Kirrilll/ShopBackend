@@ -1,165 +1,84 @@
-import React from "react";
-import { useState } from "react";
-import { ShopItemState } from "../../enums/shopItemState";
-import { Container, Row, Spinner, Col, Card, CloseButton, Button, Image, FormControl } from "react-bootstrap";
-import styled from 'styled-components'
-import EDIT_ICON from '../../icons/edit.png'
-import DELETE_ICON from '../../icons/delete.png'
-import DONE_ICON from '../../icons/done.png'
-import CLOSE_ICON from '../../icons/close.webp'
-import axios from "axios";
-import useData from "../../hooks/useData";
-import { IFormData } from "../shop-item-add-modal/shopItemAddModal";
+import React, { useState } from "react";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { BsFillCartPlusFill } from "react-icons/bs";
+import { CustomCard, IShopItem } from "../admin-shop-item/adminShopItem";
+import { IoAddOutline } from "react-icons/io5"
+import { IoIosRemove } from 'react-icons/io'
 
-export interface IShopItem {
-    id: number,
-    name: string,
-    price: number,
-    count: number,
-    imagePath: string
+
+
+interface IShopItemProp {
+    item: IShopItem,
+    addToBucket: (count: number) => void
 }
 
-const apiPath: string = 'https://localhost:7176/'
+const ShopItem: React.FC<IShopItemProp> = (props) => {
 
-const ShopItem: React.FC<IShopItem> = (props) => {
+    const { item, addToBucket } = props;
 
-    //const [itemState, setItemState] = useState(ShopItemState.DEFAULT);
+    const [count, setCount] = useState<number>(1);
 
-    const initialValue: IFormData = {
-        name: props.name,
-        price: props.price,
-        count: props.count,
-        image: null
-    };
-
-    const [isEdit, setIsEdit] = useState<boolean>(false);
-
-    const [item, setItem] = useState<IShopItem>({ ...props });
-
-    const [postData, setPostData] = useState<IFormData>(initialValue);
-
-    const handleInputField = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setPostData({ ...postData, [name]: value });
+    const _handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.currentTarget;
+        const numValue = +value;
+        if (!Number.isInteger(numValue)) return;
+        if (_isMax(numValue)) return;
+        if (numValue < 0) return;
+        setCount(numValue);
     }
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPostData({
-            ...postData,
-            image: e.target.files ? e.target.files[0] : null
-        });
+    const _isMin = (value: number) => value <= 1;
+    const _isMax = (value: number) => value >= item.count;
+
+    const increment = () => {
+        if (!_isMax(count)) setCount(count + 1);
     }
 
-
-    const deleteItem = () => {
-        axios.delete(`https://localhost:7176/api/Shop/${props.id}`);
+    const decrement = () => {
+        if (!_isMin(count)) setCount(count - 1);
     }
 
-    const save = () => {
-        const formData = new FormData();
-        formData.append('Name', postData.name);
-        formData.append('Price', postData.price.toString());
-        formData.append('Count', postData.count.toString());
-        formData.append('Image', postData.image!);
+    const isDisabled = () => _isMax(count - 1) || _isMin(count +1) || item.count == 0; 
 
-        axios({
-            method: 'PUT',
-            url: `https://localhost:7176/api/Shop/${props.id}`,
-            data: formData,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-    }
-    const handleSave = () => {
-        save();
-        setIsEdit(false)
-    }
-
-    const handleClose = () => {
-        setPostData(initialValue);
-        setIsEdit(false);
-    }
 
     return (
-        <CustomCard border='dark' style={{ width: '18rem' }}>
+        <CustomCard style={{ width: '18rem' }}>
             <Card.Header className='d-flex justify-content-between'>
-                {
-                    isEdit
-                        ? <FormControl name='name' type='text' value={postData.name} onChange={handleInputField} />
-                        : <Card.Title>{props.name}</Card.Title>
-                }
-
-                <Row className='d-flex align-items-center justify-content-between flex-nowrap'>
-                    {
-                        isEdit
-                            ? < Row className='align-items-center'>
-                                <Col>
-                                    <IconButton onClick={handleSave}>
-                                        <Image width='100%' src={DONE_ICON}></Image>
-                                    </IconButton>
-                                </Col>
-                                <Col>
-                                    <IconButton onClick={handleClose}>
-                                        <Image width='100%' src={CLOSE_ICON}></Image>
-                                    </IconButton>
-                                </Col>
-
-                            </Row>
-                            : <IconButton onClick={() => setIsEdit(true)}>
-                                <Image width='100%' src={EDIT_ICON}></Image>
-                            </IconButton>
-                    }
-                    <IconButton onClick={deleteItem}>
-                        <Image width='100%' src={DELETE_ICON}></Image>
-                    </IconButton>
-                </Row>
-
+                <Card.Title>{item.name}</Card.Title>
             </Card.Header>
-            <Card.Img width={'100%'} variant="top" src={'https://localhost:7176/' + props.imagePath} />
+            <Card.Img width={'100%'} variant="top" src={'https://localhost:7176/' + item.imagePath} />
             <Card.Body>
-                {
-                    isEdit
-                        ? <>
-                            <FormControl
-                                name='image'
-                                className="mb-3"
-                                type="file"
-                                size="sm"
-                                required
-                                accept={'image/png, image/webp'}
-                                onChange={handleImageChange}
-                            />
-                            <FormControl name='price' type='number' value={postData.price} onChange={handleInputField} />
-                            <FormControl name='count' type='number' value={postData.count} onChange={handleInputField} />
-                        </>
-                        : <>
-                            <Card.Text>{`${props.price} руб.`}</Card.Text>
-                            <Card.Text>{`${props.count} шт.`}</Card.Text>
-                        </>
-                }
+                <Card.Text>{`${item.price} руб.`}</Card.Text>
             </Card.Body>
+            <Card.Footer>
+                <Row className = 'align-items-center'>
+                    <Col>
+                        <Row  className = 'align-items-strech'>
+                            <Col style={{ padding: 0 }} sm={3} className = 'text-end'>
+                                <div onClick={decrement} className='text-center'>
+                                    <IoIosRemove />
+                                </div>
+                            </Col>
+                            <Col>
+                                <Form.Control size='sm' type="text" value={count} onChange={_handleInput} />
+                            </Col>
+                            <Col style={{ padding: 0 }} sm={3} className = 'text-end' >
+                                <div onClick={increment} className='text-center'>
+                                    <IoAddOutline />
+                                </div>
+                            </Col>
+                        </Row>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Button variant='primary' disabled = {isDisabled()} onClick = {() => addToBucket(count)}>
+                            <BsFillCartPlusFill color='white' />
+                        </Button>
+                    </Col>
+                </Row>
+            </Card.Footer>
         </CustomCard>
-    )
+    );
 }
 
-const CustomCard = styled(Card)`
-    &&{
-        border-radius: 15px;
-        background-color: #c5c5c7;
-    }
-`;
-
-const IconButton = styled(Button)`
-    &&{
-        width: 20px;
-        height: 20px;
-        border-radius: 100%;
-        padding: 0;
-        background-color: transparent;
-        border: none;
-    }
-`;
-
-
-export default ShopItem
+export default ShopItem;

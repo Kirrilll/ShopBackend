@@ -7,11 +7,11 @@ import { DataState } from "../../enums/dataState";
 import ShopItemComparer from "../../helpers/shopItemComparer";
 import useData from "../../hooks/useData";
 import useHashData from "../../hooks/useHashedData";
-import ShopItemAddModal from "../shop-item-add-modal/shopItemAddModal";
-import ShopItem, { IShopItem } from "../shop-item/shopItem";
+import AdminShopItemAddModal from "../admin-shop-item-add-modal/adminShopItemAddModal";
+import AdminShopItem, { IShopItem } from "../admin-shop-item/adminShopItem";
 
 //TODO обрабатывать состояние ERROR
-const ShopItemContainer: React.FC = () => {
+const AdminShopItemContainer: React.FC = () => {
 
 
     const [isShown, setIsShown] = useState<boolean>(false);
@@ -27,7 +27,7 @@ const ShopItemContainer: React.FC = () => {
 
     return (
         <>
-            <ShopItemAddModal isShown={isShown} handleHide={() => setIsShown(false)} />
+            <AdminShopItemAddModal isShown={isShown} handleHide={() => setIsShown(false)} />
             {dataState == DataState.NOT_LOADED
                 ? <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>
@@ -41,7 +41,7 @@ const ShopItemContainer: React.FC = () => {
 
                         {data.map((item) => (
                             <Col>
-                                <ShopItem key={item.id} {...item}></ShopItem>
+                                <AdminShopItem key={item.id} {...item}></AdminShopItem>
                             </Col>
                         ))}
                     </Row>
@@ -50,4 +50,4 @@ const ShopItemContainer: React.FC = () => {
     )
 }
 
-export default ShopItemContainer;
+export default AdminShopItemContainer;

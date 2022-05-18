@@ -16,7 +16,7 @@ export interface IFormData {
     image: File | null
 }
 
-const ShopItemAddModal: React.FC<IShopItemModel> = (props) => {
+const AdminShopItemAddModal: React.FC<IShopItemModel> = (props) => {
 
 
     const initialValue: IFormData = {
@@ -127,4 +127,4 @@ const ShopItemAddModal: React.FC<IShopItemModel> = (props) => {
     )
 }
 
-export default ShopItemAddModal;
+export default AdminShopItemAddModal;
