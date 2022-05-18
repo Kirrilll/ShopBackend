@@ -40,6 +40,10 @@ const ShopItem: React.FC<IShopItemProp> = (props) => {
 
     const isDisabled = () => _isMax(count - 1) || _isMin(count +1) || item.count == 0; 
 
+    const onAddCart = () => {
+        addToBucket(count);
+        setCount(1);
+    }
 
     return (
         <CustomCard style={{ width: '18rem' }}>
@@ -53,7 +57,10 @@ const ShopItem: React.FC<IShopItemProp> = (props) => {
             <Card.Footer>
                 <Row className = 'align-items-center'>
                     <Col>
-                        <Row  className = 'align-items-strech'>
+                        {
+                            item.count == 0 
+                            ? <div className = 'text-center' style = {{color: 'tomato'}}>Нет в налчии</div>
+                            :<Row  className = 'align-items-strech'>
                             <Col style={{ padding: 0 }} sm={3} className = 'text-end'>
                                 <div onClick={decrement} className='text-center'>
                                     <IoIosRemove />
@@ -67,11 +74,11 @@ const ShopItem: React.FC<IShopItemProp> = (props) => {
                                     <IoAddOutline />
                                 </div>
                             </Col>
-                        </Row>
+                        </Row>}
                     </Col>
 
                     <Col sm={4}>
-                        <Button variant='primary' disabled = {isDisabled()} onClick = {() => addToBucket(count)}>
+                        <Button variant='primary' disabled = {isDisabled()} onClick = {onAddCart}>
                             <BsFillCartPlusFill color='white' />
                         </Button>
                     </Col>

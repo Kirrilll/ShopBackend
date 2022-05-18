@@ -8,7 +8,8 @@ const useData = <Type>(request: () => AxiosPromise, dependencies: DependencyList
   const [dataState, setDataState] = useState<DataState>(DataState.NOT_LOADED);
   const [data, setData] = useState<Array<Type>>([]);
 
-  useEffect(() => {
+
+  const updateData = () => {
     request().then((res) => {
       if (res.status == 200) {
         setData(res.data);
@@ -16,9 +17,18 @@ const useData = <Type>(request: () => AxiosPromise, dependencies: DependencyList
       }
       else setDataState(DataState.ERROR)
     }).catch((e) => setDataState(DataState.ERROR));
+  }
+
+  useEffect(() => {
+    updateData()
   }, dependencies)
 
-  return { dataState, data, dataHandler: ((value: React.SetStateAction<Type[]>) => setData(value)) };
+  return { 
+    dataState,
+     data,
+      dataHandler: ((value: React.SetStateAction<Type[]>) => setData(value)),
+      updateData: updateData 
+    };
 };
 
 export default useData;
