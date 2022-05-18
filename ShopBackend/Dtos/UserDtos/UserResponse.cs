@@ -1,6 +1,8 @@
-﻿using ShopBackend.Domain.Entities;
+﻿
 
-namespace ShopBackend.Models
+using ShopBackend.Data.Entities;
+
+namespace ShopBackend.Dtos.UserDtos
 {
     public class UserResponse
     {
@@ -19,7 +21,7 @@ namespace ShopBackend.Models
             Name = user.Name;
             Surname = user.Surname;
             Phone = user.Phone;
-            Email = user.Email; 
+            Email = user.Email;
             Patronymic = user.Patronymic;
         }
 

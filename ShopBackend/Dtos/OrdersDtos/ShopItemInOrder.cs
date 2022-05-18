@@ -1,6 +1,6 @@
-﻿using ShopBackend.Domain.Entities;
+﻿using ShopBackend.Data.Entities;
 
-namespace ShopBackend.Models.Orders
+namespace ShopBackend.Dtos.OrdersDtos
 {
     public class ShopItemInOrder
     {
@@ -10,9 +10,9 @@ namespace ShopBackend.Models.Orders
 
         public ShopItemInOrder(ShopItem item)
         {
-            this.Id = item.ShopItemId;
-            this.Name = item.Name;
-            this.Price = item.Price;
+            Id = item.ShopItemId;
+            Name = item.Name;
+            Price = item.Price;
         }
 
         public override bool Equals(object? obj)

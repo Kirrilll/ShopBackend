@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopBackend.Domain.Entities;
-using ShopBackend.Models;
+using ShopBackend.Data.Entities;
+using ShopBackend.Dtos.UserDtos;
 
-namespace ShopBackend.Domain.Repositories
+namespace ShopBackend.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -17,7 +17,7 @@ namespace ShopBackend.Domain.Repositories
         {
             var user = await _context.users.FindAsync(id);
             if (user == null) return null;
-             _context.users.Remove(user);
+            _context.users.Remove(user);
             await _context.SaveChangesAsync();
             return user;
 
@@ -34,7 +34,7 @@ namespace ShopBackend.Domain.Repositories
         public User? Auth(AuthorizationRequest user)
         {
             var client = _context.users.FirstOrDefault<User>((client) => client.Phone.Equals(user.Phone));
-            if(client == null) return null;
+            if (client == null) return null;
             if (client.Password.Equals(user.Password)) return client;
             return null;
         }
@@ -42,15 +42,15 @@ namespace ShopBackend.Domain.Repositories
         public async Task<User?> Registration(User user)
         {
             var duplicate = _context.users.FirstOrDefault<User>((client) => client.Phone.Equals(user.Phone));
-            if(duplicate != null) return null;
+            if (duplicate != null) return null;
             _context.users.Add(user);
-            await  _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return user;
         }
 
         public User? GetById(int id)
         {
-             return _context.users.FirstOrDefault<User>(user => user.UserId == id);
+            return _context.users.FirstOrDefault<User>(user => user.UserId == id);
         }
 
         public async Task Update(User user)

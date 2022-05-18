@@ -1,6 +1,6 @@
-using ShopBackend.Domain;
 using Microsoft.EntityFrameworkCore;
-using ShopBackend.Domain.Repositories;
+using ShopBackend.Data;
+using ShopBackend.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

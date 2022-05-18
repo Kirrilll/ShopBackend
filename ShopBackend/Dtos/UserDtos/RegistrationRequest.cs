@@ -1,6 +1,8 @@
-﻿using ShopBackend.Domain.Entities;
+﻿
 
-namespace ShopBackend.Models
+using ShopBackend.Data.Entities;
+
+namespace ShopBackend.Dtos.UserDtos
 {
     public class RegistrationRequest
     {
@@ -16,12 +18,12 @@ namespace ShopBackend.Models
             return new User()
             {
                 UserId = 0,
-                Name = this.Name,
-                Surname = this.Surname,
-                Phone = this.Phone,
-                Email = this.Email,
-                Password = this.Password,
-                Patronymic = this.Patronymic,
+                Name = Name,
+                Surname = Surname,
+                Phone = Phone,
+                Email = Email,
+                Password = Password,
+                Patronymic = Patronymic,
                 IsAdmin = false,
 
             };

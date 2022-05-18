@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShopBackend.Domain.Entities
+namespace ShopBackend.Data.Entities
 {
     public class Order
     {
@@ -11,7 +11,7 @@ namespace ShopBackend.Domain.Entities
         public ICollection<OrderContent> Items { get; set; }
         public Order()
         {
-            this.Items = new List<OrderContent>();
+            Items = new List<OrderContent>();
         }
     }
 }

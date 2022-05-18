@@ -1,11 +1,11 @@
-﻿using ShopBackend.Domain.Entities;
-using ShopBackend.Models;
+﻿using ShopBackend.Data.Entities;
+using ShopBackend.Dtos.OrdersDtos;
 
-namespace ShopBackend.Domain.Repositories
+namespace ShopBackend.Data.Repositories
 {
     public interface IOrderRepository
     {
-        Task< IEnumerable<Order>> FindAll();    
+        Task<IEnumerable<Order>> FindAll();
         Task<Order?> FindById(int id);
         Task<Order?> Delete(int id);
         Task Update(Order order);

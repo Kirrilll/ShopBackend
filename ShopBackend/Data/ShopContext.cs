@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopBackend.Domain.Entities;
-
-namespace ShopBackend.Domain
+using ShopBackend.Data.Entities;
+namespace ShopBackend.Data
 {
-    public class ShopContext: DbContext
+    public class ShopContext : DbContext
     {
         public DbSet<ShopItem> items { get; set; }
         public DbSet<User> users { get; set; }
@@ -14,7 +13,7 @@ namespace ShopBackend.Domain
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>()
-                .HasMany<Order>(user => user.Orders)
+                .HasMany(user => user.Orders)
                 .WithOne(order => order.User)
                 .HasForeignKey(order => order.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -32,7 +31,7 @@ namespace ShopBackend.Domain
                 .WithMany(i => i.Orders)
                 .HasForeignKey(item => item.ShopItemId)
                 .OnDelete(DeleteBehavior.Cascade);
-                
+
         }
 
         public ShopContext(DbContextOptions<ShopContext> options) : base(options)

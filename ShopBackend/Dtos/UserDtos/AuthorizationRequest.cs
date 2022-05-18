@@ -1,6 +1,5 @@
-﻿using ShopBackend.Domain.Entities;
-
-namespace ShopBackend.Models
+﻿
+namespace ShopBackend.Dtos.UserDtos
 {
     public class AuthorizationRequest
     {

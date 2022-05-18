@@ -5,7 +5,7 @@ import OrdersContainer from "../../components/orders-container/ordersContainer";
 import ShopItemContainer from "../../components/shop-item-container/shopItemContainer";
 import UsersContainer from "../../components/users-container/usersContainer";
 
-const MainPage: React.FC = () => {
+const AdminPage: React.FC = () => {
 
     const [selectedTab, setSelectedTab] = useState('Items');
 
@@ -37,4 +37,4 @@ const MainPage: React.FC = () => {
 
 
 
-export default MainPage;
+export default AdminPage;

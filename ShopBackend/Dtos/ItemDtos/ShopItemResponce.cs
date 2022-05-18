@@ -1,6 +1,6 @@
-﻿using ShopBackend.Domain.Entities;
+﻿using ShopBackend.Data.Entities;
 
-namespace ShopBackend.Models
+namespace ShopBackend.Dtos.ItemDtos
 {
     public class ShopItemResponce
     {
@@ -12,11 +12,11 @@ namespace ShopBackend.Models
 
         public ShopItemResponce(ShopItem item)
         {
-            this.Price = item.Price;
-            this.Name = item.Name;
-            this.Count = item.Count;
-            this.Id = item.ShopItemId;
-            this.ImagePath = item.LogoPath;
+            Price = item.Price;
+            Name = item.Name;
+            Count = item.Count;
+            Id = item.ShopItemId;
+            ImagePath = item.LogoPath;
         }
 
         public override bool Equals(object? obj)

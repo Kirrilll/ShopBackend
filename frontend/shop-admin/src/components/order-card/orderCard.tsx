@@ -8,14 +8,13 @@ const OrderCard: React.FC<Order> = (order) => {
     let date: Date = new Date(order.createdAt);
 
     return (
-        <Accordion.Item className='p-4' eventKey={order.id.toString()}>
-            <Accordion.Header className='align-items-center'>
+        <Accordion.Item eventKey={order.id.toString()}>
+            <Accordion.Header className='align-items-center p-4'>
                 <Col>
                     <div className='mb-4 font-weight-bold text-lg-left'> {`Заказ # ${order.id}`}</div>
                     <div className='mb-4 font-weight-bold text-lg-left'>  {`Дата заказа: ${date.toLocaleString()}`} </div>
                     <div>  {`Заказчик: ${order.userName}`} </div>
                 </Col>
-
             </Accordion.Header>
             <Accordion.Body>
                 <Stack className='p-2 gap-2'>

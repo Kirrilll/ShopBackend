@@ -1,4 +1,4 @@
-﻿namespace ShopBackend.Models.Orders
+﻿namespace ShopBackend.Dtos.OrdersDtos
 {
     public class OrderContentPart
     {

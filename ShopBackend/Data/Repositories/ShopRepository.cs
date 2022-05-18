@@ -1,24 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopBackend.Domain.Entities;
-using ShopBackend.Models;
+using ShopBackend.Data.Entities;
+using ShopBackend.Dtos.ItemDtos;
 
-namespace ShopBackend.Domain.Repositories
+namespace ShopBackend.Data.Repositories
 {
-    public class ShopRepository: IShopRepository
+    public class ShopRepository : IShopRepository
     {
         private readonly ShopContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public ShopRepository(ShopContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;  
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<ShopItem>? Create(ShopItemRequest item)
         {
             string directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "images");
             string absoluteFilePath = Path.Combine(directoryPath, item.Image.FileName);
             string relativeFilePath = "images/" + item.Image.FileName;
-            using(var fileStream = new FileStream(absoluteFilePath, FileMode.Create))
+            using (var fileStream = new FileStream(absoluteFilePath, FileMode.Create))
             {
                 item.Image.CopyTo(fileStream);
             }
@@ -31,7 +31,7 @@ namespace ShopBackend.Domain.Repositories
                 Count = item.Count,
                 LogoPath = relativeFilePath
             };
-     
+
             _context.items.Add(shopItem);
             await _context.SaveChangesAsync();
             return shopItem;
@@ -40,7 +40,7 @@ namespace ShopBackend.Domain.Repositories
         public async Task<ShopItem?> Delete(int id)
         {
             var item = await _context.items.FindAsync(id);
-            if(item == null) return null;
+            if (item == null) return null;
             File.Delete(Path.Combine(_webHostEnvironment.WebRootPath, item.LogoPath));
             _context.items.Remove(item);
             await _context.SaveChangesAsync();
@@ -54,19 +54,19 @@ namespace ShopBackend.Domain.Repositories
 
         public async Task<ShopItem?> GetById(int id)
         {
-            return await _context.items.FindAsync(id);  
+            return await _context.items.FindAsync(id);
         }
 
         public async Task Update(ShopItemRequest item, int id)
         {
             var updatedItem = _context.items.Find(id);
-            if(updatedItem == null) return; 
-            updatedItem.Price = item.Price; 
+            if (updatedItem == null) return;
+            updatedItem.Price = item.Price;
             updatedItem.Count = item.Count;
             updatedItem.Name = item.Name;
 
 
-            if(item.Image != null)
+            if (item.Image != null)
             {
                 string directoryPath = Path.Combine(_webHostEnvironment.WebRootPath, "images");
                 string absoluteFilePath = Path.Combine(directoryPath, item.Image.FileName);
@@ -75,9 +75,9 @@ namespace ShopBackend.Domain.Repositories
                 if (!updatedItem.LogoPath.Equals(relativeFilePath))
                 {
                     using (var fileStream = new FileStream(absoluteFilePath, FileMode.Create))
-                        {
-                            item.Image.CopyTo(fileStream);
-                        }
+                    {
+                        item.Image.CopyTo(fileStream);
+                    }
                     File.Delete(Path.Combine(_webHostEnvironment.WebRootPath, updatedItem.LogoPath));
                     updatedItem.LogoPath = relativeFilePath;
                 }

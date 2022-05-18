@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { Button, Col, FloatingLabel, Form, Row, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { RequestState } from "../../enums/requestState";
 import { IFormProp } from "../../pages/login-page/loginPage";
 
@@ -17,6 +18,7 @@ const LoginForm: React.FC<IFormProp> = (props) => {
         password: ''
     };
 
+    const navigate = useNavigate();
     const [requestState, setRequestState] = useState<RequestState>(RequestState.IDLE);
     const [validated, setValidated] = useState<boolean>(false);
     const [lofingFrom, setLoginForm] = useState<ILoginForm>(initialValue)
@@ -45,6 +47,8 @@ const LoginForm: React.FC<IFormProp> = (props) => {
                 res => {
                     if (res.status == 200) {
                         setRequestState(RequestState.SUCCESSFULL);
+                        //Записываю user в глобальные данные
+                        navigate('/admin');
                         const user = res.data;
                         console.log(user);
                     }

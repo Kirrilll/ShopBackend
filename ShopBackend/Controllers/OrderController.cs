@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShopBackend.Domain.Entities;
-using ShopBackend.Domain.Repositories;
-using ShopBackend.Models;
+using ShopBackend.Data.Repositories;
+using ShopBackend.Dtos.OrdersDtos;
 
 namespace ShopBackend.Controllers
 {

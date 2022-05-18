@@ -1,6 +1,6 @@
-﻿using ShopBackend.Domain.Entities;
+﻿using ShopBackend.Data.Entities;
 
-namespace ShopBackend.Models
+namespace ShopBackend.Dtos.ItemDtos
 {
     public class ShopItemRequest
     {

@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopBackend.Domain.Entities;
-using ShopBackend.Models;
+using ShopBackend.Data.Entities;
+using ShopBackend.Dtos;
+using ShopBackend.Dtos.OrdersDtos;
 using System.Linq;
 
-namespace ShopBackend.Domain.Repositories
+namespace ShopBackend.Data.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
@@ -16,7 +17,7 @@ namespace ShopBackend.Domain.Repositories
         public async Task<Order?> Create(OrderRequest orderRequest)
         {
             var user = _context.users.FirstOrDefault<User>(user => user.UserId == orderRequest.UserId);
-            if(user == null) return null;
+            if (user == null) return null;
 
             var shopItems = orderRequest.ShopItemsId
                 .Select(itemId => _context.items.Find(itemId)!)
@@ -25,11 +26,11 @@ namespace ShopBackend.Domain.Repositories
             var itemsMap = new Dictionary<ShopItem, int>();
             foreach (var shopItem in shopItems)
             {
-                if(itemsMap.ContainsKey(shopItem)) itemsMap[shopItem]++;
+                if (itemsMap.ContainsKey(shopItem)) itemsMap[shopItem]++;
                 else itemsMap.Add(shopItem, 1);
             }
 
-            foreach(var shopItemKey in itemsMap.Keys)
+            foreach (var shopItemKey in itemsMap.Keys)
             {
                 shopItemKey.Count -= itemsMap[shopItemKey];
                 _context.Entry(shopItemKey).State = EntityState.Modified;
@@ -41,7 +42,7 @@ namespace ShopBackend.Domain.Repositories
                 User = user,
                 UserId = user.UserId,
             };
-            order.Items =  shopItems.Select(item => new OrderContent()
+            order.Items = shopItems.Select(item => new OrderContent()
             {
                 Order = order,
                 OrderId = order.OrderId,
@@ -57,7 +58,7 @@ namespace ShopBackend.Domain.Repositories
         public async Task<Order?> Delete(int id)
         {
             var order = await _context.orders.FindAsync(id);
-            if(order == null) return null;
+            if (order == null) return null;
             _context.orders.Remove(order);
             await _context.SaveChangesAsync();
             return order;

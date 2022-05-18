@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShopBackend.Domain.Repositories;
-using ShopBackend.Domain.Entities;
-using ShopBackend.Models;
+using ShopBackend.Data.Repositories;
+using ShopBackend.Dtos.ItemDtos;
 
 namespace ShopBackend.Controllers
 {

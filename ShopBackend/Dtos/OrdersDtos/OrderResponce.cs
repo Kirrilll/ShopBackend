@@ -1,7 +1,6 @@
-﻿using ShopBackend.Domain.Entities;
-using ShopBackend.Models.Orders;
+﻿using ShopBackend.Data.Entities;
 
-namespace ShopBackend.Models
+namespace ShopBackend.Dtos.OrdersDtos
 {
     public class OrderResponce
     {
@@ -9,7 +8,7 @@ namespace ShopBackend.Models
         public int UserId { get; set; }
         public string UserName { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<OrderContentPart> OrderContents{ get; set; }
+        public ICollection<OrderContentPart> OrderContents { get; set; }
 
         public OrderResponce(Order order)
         {
@@ -19,10 +18,10 @@ namespace ShopBackend.Models
             UserName = order.User.Surname + " " + order.User.Name + " " + order.User.Patronymic;
 
             Dictionary<ShopItemInOrder, int> items = new Dictionary<ShopItemInOrder, int>();
-            foreach(var item in order.Items)
+            foreach (var item in order.Items)
             {
                 var itemInOrder = new ShopItemInOrder(item.ShopItem);
-                if(items.ContainsKey(itemInOrder)) items[itemInOrder]++;
+                if (items.ContainsKey(itemInOrder)) items[itemInOrder]++;
                 else items.Add(itemInOrder, 1);
             }
 
