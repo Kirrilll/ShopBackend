@@ -13,7 +13,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
-builder.Services.AddDbContext<FastFoodContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ShopConnection")));
+builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ShopConnection")));
 
 var app = builder.Build();
 
