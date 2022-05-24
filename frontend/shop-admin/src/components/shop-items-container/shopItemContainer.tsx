@@ -21,7 +21,7 @@ const ShopItemContainer: React.FC<IShopItemsContainerProp> = (props) => {
         <Container className='test-center p-4'>
             {DataState.LOADED
                 ? <Row xs={1} md={2} className="g-4">
-                    {data.map(item => <Col key = {item.id} ><ShopItem key = {item.id} addToBucket = {(count) => addToBucket(item, count)} item={item}></ShopItem></Col>)}
+                    {data.filter(item => !item.isDeleted).map(item => <Col key = {item.id} ><ShopItem key = {item.id} addToBucket = {(count) => addToBucket(item, count)} item={item}></ShopItem></Col>)}
                 </Row>
                 : <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>

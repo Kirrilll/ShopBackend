@@ -12,7 +12,7 @@ export interface User {
     isAdmin: boolean
 }
 
-export interface IUserCardProp{
+export interface IUserCardProp {
     user: User,
     setRole: () => void;
 }
@@ -20,17 +20,23 @@ export interface IUserCardProp{
 
 const UserCard: React.FC<IUserCardProp> = (props) => {
 
-    const {user, setRole} = props;
+    const { user, setRole } = props;
 
     const fullName = `${user.surname} ${user.name} ${user.patronymic}`;
 
     return (
         <UserCardWrapper>
-            <Row className = 'align-items-center'>
-                <Col sm = {8}>
+            <Row sm={8} className='align-items-center'>
+                <Col sm={8}>
                     <div>{fullName}</div>
                 </Col>
-                <Col sm ={4} className='text-end p-2'>
+                <Col sm={8}>
+                    <div>{user.email}</div>
+                </Col>
+                <Col sm={8}>
+                    <div>{user.phone}</div>
+                </Col>
+                <Col sm={4} className='text-end p-2'>
                     <Row>
                         <Col className='text-end'>
                             <RoleText isAdmin={user.isAdmin}>
@@ -38,7 +44,7 @@ const UserCard: React.FC<IUserCardProp> = (props) => {
                             </RoleText>
                         </Col>
                         <Col>
-                            <Button onClick = {setRole}>
+                            <Button onClick={setRole}>
                                 Добавить
                             </Button>
                         </Col>

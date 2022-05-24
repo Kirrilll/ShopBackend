@@ -167,7 +167,7 @@ const RegistrationForm: React.FC<IFormProp> = (props) => {
                     isInvalid={!RegistrationValidator.isValidPassword(regFormData.password)}
                     onChange={handleInputField} />
                 <Form.Control.Feedback type="invalid">
-                    Пароль олжен содержать больше 5 символов
+                    Пароль олжен содержать больше 6 символов
                 </Form.Control.Feedback>
             </FloatingLabel>
             <FloatingLabel controlId="floatingPasswordRepeat" label="Подтверждние пароля" className="mb-3">

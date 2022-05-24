@@ -29,7 +29,8 @@ namespace ShopBackend.Data.Repositories
                 Name = item.Name,
                 Price = item.Price,
                 Count = item.Count,
-                LogoPath = relativeFilePath
+                LogoPath = relativeFilePath,
+                IsDeleted = false,
             };
 
             _context.items.Add(shopItem);
@@ -40,9 +41,10 @@ namespace ShopBackend.Data.Repositories
         public async Task<ShopItem?> Delete(int id)
         {
             var item = await _context.items.FindAsync(id);
+            item.IsDeleted = true;
             if (item == null) return null;
             File.Delete(Path.Combine(_webHostEnvironment.WebRootPath, item.LogoPath));
-            _context.items.Remove(item);
+            _context.Entry(item).State = EntityState.Modified; ;
             await _context.SaveChangesAsync();
             return item;
         }

@@ -39,7 +39,7 @@ const AdminShopItemContainer: React.FC = () => {
                             <Button variant="primary" size="lg" onClick={() => setIsShown(true)}> Добавить </Button>
                         </Col>
 
-                        {data.map((item) => (
+                        {data.filter(item => !item.isDeleted).map((item) => (
                             <Col>
                                 <AdminShopItem key={item.id} {...item}></AdminShopItem>
                             </Col>

@@ -16,7 +16,8 @@ export interface IShopItem {
     name: string,
     price: number,
     count: number,
-    imagePath: string
+    imagePath: string,
+    isDeleted: boolean
 }
 
 const apiPath: string = 'https://localhost:7176/'

@@ -32,7 +32,9 @@ namespace ShopBackend.Data.Repositories
 
             foreach (var shopItemKey in itemsMap.Keys)
             {
-                shopItemKey.Count -= itemsMap[shopItemKey];
+                if (shopItemKey.Count < itemsMap[shopItemKey])
+                    return null;
+                 shopItemKey.Count -= itemsMap[shopItemKey];
                 _context.Entry(shopItemKey).State = EntityState.Modified;
             }
 

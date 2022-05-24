@@ -74,7 +74,7 @@ const ShopPage: React.FC = () => {
         let responce = await axios.post(
             'https://localhost:7176/api/Order',
             {
-                userId: 1,
+                userId: id,
                 shopItemsId: ids
             }
         );

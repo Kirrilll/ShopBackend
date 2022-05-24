@@ -9,7 +9,7 @@ namespace ShopBackend.Dtos.ItemDtos
         public int Price { get; set; }
         public int Count { get; set; }
         public string ImagePath { get; set; }
-
+        public bool IsDeleted { get; set; }
         public ShopItemResponce(ShopItem item)
         {
             Price = item.Price;
@@ -17,6 +17,7 @@ namespace ShopBackend.Dtos.ItemDtos
             Count = item.Count;
             Id = item.ShopItemId;
             ImagePath = item.LogoPath;
+            IsDeleted = item.IsDeleted;
         }
 
         public override bool Equals(object? obj)

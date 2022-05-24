@@ -15,5 +15,5 @@ export interface Order{
     userId: number,
     orderContents: Array<OrderContent>,
     createdAt: Date,
-    userName: string
+    userName: string,
 }
